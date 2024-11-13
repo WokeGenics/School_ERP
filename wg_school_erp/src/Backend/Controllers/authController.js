@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
+    console.log("call")
     const { username, password } = req.body;
 
     try {
