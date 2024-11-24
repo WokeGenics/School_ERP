@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from './Pagination';
 
-const sampleData = Array(30).fill().map((_, index) => ({
+const sampleData = Array.from({ length: 30 }, (_, index) => ({
   roll: `#002${index + 1}`,
   photo: `https://icon-library.com/images/student-icon/student-icon-11.jpg`,
   name: index % 2 === 0 ? 'Mark Willy' : 'Jessia Rose',
