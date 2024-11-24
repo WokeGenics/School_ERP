@@ -12,7 +12,8 @@ const AdmissionSchema = new mongoose.Schema({
         required: true
     },
     promoted_class: {
-        type: String
+        type: String,
+        require: true
     },
     admission_date: {
         type: Date,

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Pagination from './Pagination';
 
-const sampleTeachers = Array(30).fill().map((_, index) => ({
+const sampleTeachers = Array(30).fill(undefined).map((_, index) => ({
   id: `#00${index + 1}`,
   photo: `https://www.radiustheme.com/demo/html/psdboss/akkhor/akkhor/img/figure/teacher.jpg`, // Placeholder photo
   name: index % 2 === 0 ? 'Mark Willy' : 'Jessia Rose',
