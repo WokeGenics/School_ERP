@@ -1,7 +1,7 @@
-const mongoose = require('monggose');
+const mongoose = require('mongoose');
 
 
-const SalarySchema = new mongoose.schema({
+const SalarySchema = new mongoose.Schema({
     Roll :{
         require: true,
         type: String

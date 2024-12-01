@@ -1,5 +1,5 @@
 const express = require("express");
-const { login, addStudent, isSalaryPaid, getAllTeacher, getFeeReceipt, FeeReceipt, getFeeCategory, getEntranceExam, FeeCategory, AddEntranceExam, ClassFee, getSalaryDetails, AdmissionReceipt, Bank, getAllStudent , addParentDetails, getAllParent, LateFeeSchema, AdmissionSchema } = require("../Controllers/authController");
+const { login, getAllAdmission, addStudent, isSalaryPaid, getAllTeacher, getFeeReceipt, FeeReceipt, getFeeCategory, getEntranceExam, FeeCategory, AddEntranceExam, ClassFee, getSalaryDetails, AdmissionReceipt, Bank, getAllStudent , addParentDetails, getAllParent, LateFeeSchema, AdmissionSchema } = require("../Controllers/authController");
 const router = express.Router();
 
 // get request

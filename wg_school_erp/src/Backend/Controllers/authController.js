@@ -3,8 +3,8 @@ const Student = require("../models/Student");
 const Teacher = require("../models/Teacher");
 const Salary = require("../models/Salary");
 const Parent = require("../models/Parent");
-const Admission = require("../models/AdmissionSchema");
-const LateFee = require("../models/LateFeeSchema");
+
+const LateFee = require("../models/LateFees");
 const Admission = require("../models/Admission");
 const ClassFee = require("../models/ClassFee");
 const Bank = require("../models/Bank");
@@ -44,8 +44,7 @@ exports.addStudent = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-
-exports.getSalaryDetails = async (req, res) => {
+exports.getAllStudent = async (req, res) => {
   try {
     const students = await Student.find();
     res.status(200).json(students);
@@ -53,6 +52,8 @@ exports.getSalaryDetails = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
 
 exports.addTeacher = async (req, res) => {
   try {
