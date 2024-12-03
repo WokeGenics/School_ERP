@@ -7,7 +7,9 @@ import Image from 'next/image';
 // import jwtDecode from 'jwt-decode';
 // import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
+import { FaFacebookSquare } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { GrApple } from "react-icons/gr";
 // import { redirect } from 'next/navigation'
 
 export default function LoginPage() {
@@ -117,38 +119,21 @@ export default function LoginPage() {
         </div>
 
         {/* Right side with social buttons */}
-        <div className={styles.socialWrapper}>
-          <div className={styles.socialButtons}>
+        <div className={`${styles.socialWrapper} text-left flex`}>
+          <div className={`${styles.socialButtons} text-justify`}>
             <button className={styles.googleButton}>
-              <Image
-                src="/images/google.png"
-                alt="Google Logo"
-                width={25}
-                height={25}
-                className={styles.logo}
-              />
+            <FcGoogle className="mx-3 text-4xl"/>
               Continue with Google
             </button>
 
             <button className={styles.appleButton}>
-              <Image
-                src="/images/apple.png"
-                alt="Apple Logo"
-                width={25}
-                height={25}
-                className={styles.logo}
-              />
+            <GrApple className="mx-3 text-4xl"/>
               Continue with Apple
             </button>
 
             <button className={styles.facebookButton}>
-              <Image
-                src="/images/fb.png"
-                alt="Facebook Logo"
-                width={25}
-                height={25}
-                className={styles.logo}
-              />
+            <FaFacebookSquare className="mx-3 text-4xl"/>
+             
               Continue with Facebook
             </button>
           </div>
