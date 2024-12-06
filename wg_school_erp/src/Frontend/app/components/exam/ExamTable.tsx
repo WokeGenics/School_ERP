@@ -16,7 +16,7 @@ export default function ExamTable({ exams }) {
   );
 
   return (
-    <div className="bg-white shadow-md p-6 rounded-lg">
+    <div className="bg-white shadow-md p-6 rounded-lg overflow-y-scroll">
       <h2 className="text-lg font-bold mb-4 text-black">All Exam Schedule</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <input

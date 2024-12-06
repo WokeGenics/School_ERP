@@ -1,29 +1,36 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NoticeForm from "../components/notice/NoticeForm";
 import NoticeList from "../components/notice/NoticeList";
 import NoticeSearch from "../components/notice/NoticeSearch";
 
 const NoticeBoardPage = () => {
-  const [notices, setNotices] = useState([
-    {
-      title: "Great School Event",
-      details: "Great School manages many great events...",
-      postedBy: "Jennyfar Lopez",
-      date: "16 June, 2019",
-    },
-    {
-      title: "Exam Schedule Released",
-      details: "Exam schedules for Class 10 are now available.",
-      postedBy: "Admin",
-      date: "15 June, 2019",
-    },
-  ]);
-
+  const [notices, setNotices] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const addNotice = (newNotice) => {
-    setNotices([newNotice, ...notices]);
+  useEffect(() => {
+    // Fetch notices from backend whenever the search query changes
+    const fetchNotices = async () => {
+      const response = await fetch(`http://localhost:5000/api/notices?searchQuery=${searchQuery}`);
+      const data = await response.json();
+      setNotices(data);
+    };
+
+    fetchNotices();
+  }, [searchQuery]);
+
+  const addNotice = async (newNotice) => {
+    // Add notice to the backend
+    const response = await fetch("http://localhost:5000/api/notices", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newNotice),
+    });
+
+    const addedNotice = await response.json();
+    setNotices([addedNotice, ...notices]);
   };
 
   return (
