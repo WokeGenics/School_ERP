@@ -21,7 +21,7 @@ let i =true;
             <head></head>
           
             <body className='bg-orange-500'>  <Header />
-                <div className='w-65 cont'>{children}</div> </body>
+                <div className='cont'>{children}</div> </body>
         </html>
     );
   }

@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function AttendanceTable({ attendanceData }) {
   return (
-    <div className="bg-white shadow-md p-6 rounded-lg">
+    <div className="bg-white shadow-md p-6 rounded-lg overflow-y-scroll">
       <h2 className="text-lg font-bold mb-4 text-black">
         Attendance Sheet Of Class {attendanceData.class}: Section {attendanceData.section}, {attendanceData.month} {attendanceData.session}
       </h2>

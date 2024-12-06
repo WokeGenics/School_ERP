@@ -16,8 +16,9 @@ const AddContactForm = ({ onAddContact }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.contact || !formData.role) {
+    if (!formData.name || !formData.email || !formData.contact ) {
       alert("Please fill in all fields.");
+     
       return;
     }
 

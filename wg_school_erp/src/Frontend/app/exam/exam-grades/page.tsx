@@ -1,17 +1,43 @@
-"use client"
-import React, { useState } from "react";
-import AddGradeForm from "../../components/exam/AddGradeForm";
-import GradeTable from "../../components/exam/GradeTable";
+'use client';
+import React, { useState, useEffect } from 'react';
+import AddGradeForm from '../../components/exam/AddGradeForm';
+import GradeTable from '../../components/exam/GradeTable';
 
 const ExamGradesPage = () => {
-  const [grades, setGrades] = useState([
-    { gradeName: "A+", gradePoint: "4.0", percentFrom: "95", percentUpTo: "100", comment: "Excellent" },
-    { gradeName: "A", gradePoint: "3.5", percentFrom: "90", percentUpTo: "94", comment: "Very Good" },
-    { gradeName: "B+", gradePoint: "3.0", percentFrom: "85", percentUpTo: "89", comment: "Good" },
-  ]);
+  const BaseUrl = "http://localhost:5000";
+  const [grades, setGrades] = useState([]);
 
-  const addGrade = (newGrade) => {
-    setGrades([...grades, newGrade]);
+  // Fetch grades from API
+  useEffect(() => {
+    const fetchGrades = async () => {
+      try {
+        const response = await fetch(`${BaseUrl}/api/grades`);
+        const data = await response.json();
+        setGrades(data);
+      } catch (error) {
+        console.error('Error fetching grades:', error);
+      }
+    };
+
+    fetchGrades();
+  }, []);
+
+  // Add grade to the database
+  const addGrade = async (newGrade) => {
+    try {
+      const response = await fetch(`${BaseUrl}/api/grades`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newGrade),
+      });
+
+      if (response.ok) {
+        const savedGrade = await response.json();
+        setGrades([...grades, savedGrade.grade]);
+      }
+    } catch (error) {
+      console.error('Error adding grade:', error);
+    }
   };
 
   return (

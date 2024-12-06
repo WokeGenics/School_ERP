@@ -10,7 +10,9 @@ const HostelRoomTable = ({ rooms, onEditRoom, onDeleteRoom }) => {
           <tr>
             <th className="border border-gray-300 p-2">Hostel Name</th>
             <th className="border border-gray-300 p-2">Room No</th>
+            <th className="border border-gray-300 p-2">Name</th>
             <th className="border border-gray-300 p-2">Room Type</th>
+          
             <th className="border border-gray-300 p-2">No. of Beds</th>
             <th className="border border-gray-300 p-2">Cost Per Bed ($)</th>
             <th className="border border-gray-300 p-2">Actions</th>
@@ -21,17 +23,25 @@ const HostelRoomTable = ({ rooms, onEditRoom, onDeleteRoom }) => {
             <tr key={index}>
               <td className="border border-gray-300 p-2">{room.hostelName}</td>
               <td className="border border-gray-300 p-2">{room.roomNumber}</td>
+              <td className="border border-gray-300 p-2">{room.name}</td>
               <td className="border border-gray-300 p-2">{room.roomType}</td>
+           
               <td className="border border-gray-300 p-2">{room.numberOfBeds}</td>
               <td className="border border-gray-300 p-2">${room.costPerBed}</td>
               <td className="border border-gray-300 p-2 flex justify-center items-center space-x-4">
                 <FaEdit
-                  onClick={() => onEditRoom(room)}
+                  onClick={() => {
+                    console.log("Editing room:", room);
+                    onEditRoom(room);
+                  }}
                   className="text-blue-500 cursor-pointer hover:opacity-80"
                   size={18}
                 />
                 <FaTrash
-                  onClick={() => onDeleteRoom(room.roomNumber)}
+                  onClick={() => {
+                    console.log("Deleting room:", room.roomNumber);
+                    onDeleteRoom(room.roomNumber);
+                  }}
                   className="text-red-500 cursor-pointer hover:opacity-80"
                   size={18}
                 />
