@@ -1,6 +1,7 @@
 // app/components/Sidebar.tsx
 "use client";
 import { useState } from 'react';
+import Link from 'next/link';
 import { HomeIcon, UserIcon, CalendarIcon, DocumentReportIcon, CogIcon, ChevronDownIcon, ChevronUpIcon, CurrencyRupeeIcon,KeyIcon, ChevronRightIcon } from '@heroicons/react/outline';
 
 const Sidebar = () => {
@@ -15,100 +16,100 @@ const Sidebar = () => {
      
       <ul className='text-xl' >
       <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-600 px-4 rounded" onClick={() => toggleDropdown('patients')}>
+          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-600 px-4 rounded" onClick={() => toggleDropdown('dashboard')}>
             <div className="flex items-center">
               <HomeIcon className="h-5 w-5 mr-2" /> Dashboard
             </div>
-            {openMenu === 'patients' ? <ChevronDownIcon className="h-4 w-4 " /> : <ChevronRightIcon className="h-5 w-5" />}
+            {openMenu === 'dashboard' ? <ChevronDownIcon className="h-4 w-4 " /> : <ChevronRightIcon className="h-5 w-5" />}
           </div>
-          {openMenu === 'patients' && (
+          {openMenu === 'dashboard' && (
             <ul className="pl-6">
-              <li><a href="/dashboard" className="block py-2 hover:bg-gray-700 rounded">Admin</a></li>
-              <li><a href="/students-dashboard" className="block py-2 hover:bg-gray-700 rounded">Students</a></li>
-              <li><a href="/teachers-dashboard" className="block py-2 hover:bg-gray-700 rounded">Teachers</a></li>
+              <li><Link href="/dashboard" className="block py-2 hover:bg-gray-700 rounded">Admin</Link></li>
+              <li><Link href="/students-dashboard" className="block py-2 hover:bg-gray-700 rounded">Students</Link></li>
+              <li><Link href="/teachers-dashboard" className="block py-2 hover:bg-gray-700 rounded">Teachers</Link></li>
             
             </ul>
           )}
         </li>
 
         <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('patients')}>
+          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('students')}>
             <div className="flex items-center">
               <UserIcon className="h-5 w-5 mr-2" /> Student
             </div>
-            {openMenu === 'patients' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
+            {openMenu === 'students' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
           </div>
-          {openMenu === 'patients' && (
+          {openMenu === 'students' && (
             <ul className="pl-6">
-              <li><a href="/patients/patients" className="block py-2 hover:bg-gray-700 rounded">Add Students</a></li>
-              <li><a href="/patients/add/" className="block py-2 hover:bg-gray-700 rounded">View Students</a></li>
-              <li><a href="/patients/about/" className="block py-2 hover:bg-gray-700 rounded">Student Details</a></li>
-              <li><a href="/patients/details/" className="block py-2 hover:bg-gray-700 rounded">Students Promotion</a></li>
+              <li><Link href="/students/add-student" className="block py-2 hover:bg-gray-700 rounded">Add Students</Link></li>
+              <li><Link href="/students/all-students/" className="block py-2 hover:bg-gray-700 rounded">View Students</Link></li>
+              <li><Link href="/students/students-detail" className="block py-2 hover:bg-gray-700 rounded">Student Details</Link></li>
+              <li><Link href="/students/promotion" className="block py-2 hover:bg-gray-700 rounded">Students Promotion</Link></li>
 
             </ul>
           )}
         </li>
         <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('doctors')}>
+          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('teachers')}>
             <div className="flex items-center">
               <UserIcon className="h-5 w-5 mr-2" /> Teachers
             </div>
-            {openMenu === 'doctors' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
+            {openMenu === 'teachers' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
           </div>
-          {openMenu === 'doctors' && (
+          {openMenu === 'teachers' && (
             <ul className="pl-6">
-              <li><a href="/doctors/lists" className="block py-2 hover:bg-gray-700 rounded">All Teachers</a></li>
-              <li><a href="/doctors/add" className="block py-2 hover:bg-gray-700 rounded">Add Teachers</a></li>
-              <li><a href="/doctors/details" className="block py-2 hover:bg-gray-700 rounded">Teachers Details </a></li>
-              <li><a href="/doctors/edits" className="block py-2 hover:bg-gray-700 rounded">Payments</a></li>
+              <li><Link href="/teachers/all-teachers" className="block py-2 hover:bg-gray-700 rounded">All Teachers</Link></li>
+              <li><Link href="/teachers/add-teacher" className="block py-2 hover:bg-gray-700 rounded">Add Teachers</Link></li>
+              <li><Link href="/teachers/about-teacher" className="block py-2 hover:bg-gray-700 rounded">Teachers Details </Link></li>
+              <li><Link href="/teachers/teachers-payment" className="block py-2 hover:bg-gray-700 rounded">Payments</Link></li>
 
             </ul>
           )}
         </li>
 
         <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('appointments')}>
+          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('library')}>
             <div className="flex items-center">
               <CalendarIcon className="h-5 w-5 mr-2" /> Library
             </div>
-            {openMenu === 'appointments' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
+            {openMenu === 'library' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
           </div>
-          {openMenu === 'appointments' && (
+          {openMenu === 'library' && (
             <ul className="pl-6">
-              <li><a href="/appointments/views" className="block py-2 hover:bg-gray-700 rounded">Add Books</a></li>
-              <li><a href="/appointments/schedules" className="block py-2 hover:bg-gray-700 rounded">All Books</a></li>
+              <li><Link href="/library/add-book" className="block py-2 hover:bg-gray-700 rounded">Add Books</Link></li>
+              <li><Link href="/library/all-books" className="block py-2 hover:bg-gray-700 rounded">All Books</Link></li>
           
             </ul>
           )}
         </li>
 
         <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('payments')}>
+          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('accounts')}>
             <div className="flex items-center">
               <CurrencyRupeeIcon className="h-5 w-5 mr-2" /> Accounts
             </div>
-            {openMenu === 'payments' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
+            {openMenu === 'accounts' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
           </div>
-          {openMenu === 'payments' && (
+          {openMenu === 'accounts' && (
             <ul className="pl-6">
-              <li><a href="/payments/add" className="block py-2 hover:bg-gray-700 rounded">Add Expenses</a></li>
-              <li><a href="/payments/lists" className="block py-2 hover:bg-gray-700 rounded">All Fee Collection</a></li>
-              <li><a href="/payments/invoice" className="block py-2 hover:bg-gray-700 rounded">Add Expenses</a></li>
+              <li><Link href="/accounts/add-expense" className="block py-2 hover:bg-gray-700 rounded">Add Expenses</Link></li>
+              <li><Link href="/accounts/all-fee-details" className="block py-2 hover:bg-gray-700 rounded">All Fee Collection</Link></li>
+              <li><Link href="/accounts/expenses" className="block py-2 hover:bg-gray-700 rounded">Expenses</Link></li>
 
             </ul>
           )}
         </li>
         <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('room_allotments')}>
+          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('class')}>
             <div className="flex items-center">
               <KeyIcon className="h-5 w-5 mr-2" /> Class
             </div>
-            {openMenu === 'room_allotments' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
+            {openMenu === 'class' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
           </div>
-          {openMenu === 'room_allotments' && (
+          {openMenu === 'class' && (
             <ul className="pl-6">
-              <li><a href="/room/alotments" className="block py-2 hover:bg-gray-700 rounded">Add Class </a></li>
-              <li><a href="/room/lists" className="block py-2 hover:bg-gray-700 rounded">All Class</a></li>
+              <li><Link href="/class/add-new-class" className="block py-2 hover:bg-gray-700 rounded">Add Class </Link></li>
+              <li><Link href="/class/all-class" className="block py-2 hover:bg-gray-700 rounded">All Class</Link></li>
             
 
             </ul>
@@ -117,7 +118,7 @@ const Sidebar = () => {
         <li>
           <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
             <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /> Class Routine
+              <KeyIcon className="h-5 w-5 mr-2" /> <Link href="/class-routine" className="block py-2 hover:bg-gray-700 rounded">Class Routine</Link>
             </div>
             </div>
        
@@ -125,7 +126,7 @@ const Sidebar = () => {
         <li>
           <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
             <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /> Attendence
+              <KeyIcon className="h-5 w-5 mr-2" /><Link href="/attendence" className="block py-2 hover:bg-gray-700 rounded">Attendence</Link> 
             </div>
             </div>
        
@@ -133,41 +134,32 @@ const Sidebar = () => {
 
 
         <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('payments')}>
+          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('exam')}>
             <div className="flex items-center">
               <CurrencyRupeeIcon className="h-5 w-5 mr-2" /> Exam
             </div>
-            {openMenu === 'payments' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
+            {openMenu === 'exam' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
           </div>
-          {openMenu === 'payments' && (
+          {openMenu === 'exam' && (
             <ul className="pl-6">
-              <li><a href="/payments/add" className="block py-2 hover:bg-gray-700 rounded">Exam Schedule</a></li>
-              <li><a href="/payments/lists" className="block py-2 hover:bg-gray-700 rounded">Exam Grades</a></li>
+              <li><a href="/exam/exam-schedule" className="block py-2 hover:bg-gray-700 rounded">Exam Schedule</a></li>
+              <li><a href="/exam/exam-grades" className="block py-2 hover:bg-gray-700 rounded">Exam Grades</a></li>
            
 
             </ul>
           )}
         </li>
-
         <li>
           <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
             <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /> Transport
+              <KeyIcon className="h-5 w-5 mr-2" /><Link href="/transport" className="block py-2 hover:bg-gray-700 rounded">Transport</Link> 
             </div>
             </div>
        
-        </li>    <li>
+        </li>         <li>
           <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
             <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /> Hostel
-            </div>
-            </div>
-       
-        </li>
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
-            <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" />Notice 
+              <KeyIcon className="h-5 w-5 mr-2" /><Link href="/hostel" className="block py-2 hover:bg-gray-700 rounded">Hostel</Link> 
             </div>
             </div>
        
@@ -175,7 +167,15 @@ const Sidebar = () => {
         <li>
           <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
             <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /> Message
+              <KeyIcon className="h-5 w-5 mr-2" /><Link href="/notice" className="block py-2 hover:bg-gray-700 rounded">Notice</Link> 
+            </div>
+            </div>
+       
+        </li>
+        <li>
+          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
+            <div className="flex items-center">
+              <KeyIcon className="h-5 w-5 mr-2" /><Link href="/message" className="block py-2 hover:bg-gray-700 rounded">Message</Link> 
             </div>
             </div>
        
