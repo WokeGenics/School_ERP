@@ -9,21 +9,26 @@ const StudentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    dob: {
-        type: Date,
-        required: true
-    },
-    BloodGroup: {
-        type: String,
-        require: true
-    },
     gender: {
         type: String,
         required: true
     },
+    dob: {
+        type: Date,
+        required: true
+    },
+    bloodGroup: {
+        type: String,
+        require: true
+    },
     religion: {
         type: String,
         require: true
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true
     },
     class:{
         type: String,
@@ -33,9 +38,17 @@ const StudentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Short_Bio:{
+    admissionId:{
         type: String,
-        required: true
+    },
+    phone:{
+        type: String,
+    },
+    roll:{
+        type:String,
+    },
+    bio:{
+        type: String,
     },
     category_id: {
         type: mongoose.Schema.Types.ObjectId,

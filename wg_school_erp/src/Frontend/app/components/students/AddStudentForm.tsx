@@ -1,10 +1,13 @@
 "use client";
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function AddStudentForm() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     gender: '',
     dob: '',
     roll: '',
@@ -19,6 +22,10 @@ export default function AddStudentForm() {
     photo: null,
   });
 
+  // const handalesubmit = (e)=>{
+  //   console.log(formData);
+  // } 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -29,18 +36,32 @@ export default function AddStudentForm() {
     setFormData((prevData) => ({ ...prevData, photo: file }));
   };
 
-  const handleSave = (e) => {
+  const handalesubmit = async(e) => {
     e.preventDefault();
     // Perform validation here if needed
-    console.log('Form submitted:', formData);
-    alert('Student data saved successfully!');
+    console.log("hello")
+    const response = await fetch('http://localhost:5000/auth/addStudent', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        formData: formData,
+      })
+    })
+
+    const data = await response.json();
+    if(data.Message == "The student has been created"){
+      toast("The student has been created")
+    }
     // Here, you could also send the data to a backend server
   };
 
   const handleReset = () => {
     setFormData({
-      firstName: '',
-      lastName: '',
+      first_name: '',
+      last_name: '',
       gender: '',
       dob: '',
       roll: '',
@@ -59,14 +80,15 @@ export default function AddStudentForm() {
   return (
     <div className="bg-white shadow-md p-6 rounded-lg">
       <h2 className="text-2xl font-bold mb-4">Add New Students</h2>
-      <form onSubmit={handleSave} className="grid grid-cols-2 gap-4">
+      <ToastContainer/>
+      <form onSubmit={handalesubmit} className="grid grid-cols-2 gap-4">
         {/* First Name */}
         <div>
           <label className="block font-semibold mb-1">First Name *</label>
           <input
             type="text"
-            name="firstName"
-            value={formData.firstName}
+            name="first_name"
+            value={formData.first_name}
             onChange={handleChange}
             className="border p-2 rounded-md w-full"
             required
@@ -78,8 +100,8 @@ export default function AddStudentForm() {
           <label className="block font-semibold mb-1">Last Name *</label>
           <input
             type="text"
-            name="lastName"
-            value={formData.lastName}
+            name="last_name"
+            value={formData.last_name}
             onChange={handleChange}
             className="border p-2 rounded-md w-full"
             required
@@ -248,7 +270,7 @@ export default function AddStudentForm() {
             value={formData.bio}
             onChange={handleChange}
             className="border p-2 rounded-md w-full"
-            rows="4"
+            rows={4}
           ></textarea>
         </div>
 
