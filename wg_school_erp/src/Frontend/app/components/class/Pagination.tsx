@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 
 export default function Pagination({ totalItems, itemsPerPage, currentPage, onPageChange }) {
@@ -8,7 +9,7 @@ export default function Pagination({ totalItems, itemsPerPage, currentPage, onPa
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-3 py-1 bg-gray-200 rounded-md disabled:opacity-50"
+        className="px-3 py-1 bg-gray-200 rounded-md disabled:opacity-50 text-black"
       >
         Previous
       </button>
@@ -28,7 +29,7 @@ export default function Pagination({ totalItems, itemsPerPage, currentPage, onPa
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-1 bg-gray-200 rounded-md disabled:opacity-50"
+        className="px-3 py-1 bg-gray-200 rounded-md disabled:opacity-50 text-black"
       >
         Next
       </button>

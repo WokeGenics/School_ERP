@@ -42,7 +42,6 @@ exports.addStudent = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-}
 
 exports.getAllStudent = async (req, res) => {
   try {
@@ -52,6 +51,8 @@ exports.getAllStudent = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
 
 exports.addTeacher = async (req, res) => {
   try {

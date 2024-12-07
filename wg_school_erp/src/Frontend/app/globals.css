@@ -31,3 +31,15 @@ body {
     text-wrap: balance;
   }
 }
+.cont{
+  position: absolute;
+  z-index: 20;
+  width: 80%;
+  top:70px;
+  right: 00;
+
+}
+.zee{
+  z-index: 26;
+  width: 20%;
+}
