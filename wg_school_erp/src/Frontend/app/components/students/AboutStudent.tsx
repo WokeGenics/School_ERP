@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { FaEdit, FaPrint, FaDownload, FaSave } from 'react-icons/fa';
 import StudentSearch from './StudentSearch';
 
@@ -34,6 +34,12 @@ export default function AboutStudent() {
       [name]: value,
     }));
   };
+
+  useEffect(()=>{
+    const response = fetch('http://localhost:5000/auth/get-AllStudent')
+    .then(response => response.json())
+    .then(data => setProfileData(data))
+  })
 
   const handleSave = () => {
     setIsEditing(false);

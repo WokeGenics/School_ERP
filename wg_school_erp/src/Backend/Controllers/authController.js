@@ -3,8 +3,7 @@ const Student = require("../models/Student");
 const Teacher = require("../models/Teacher");
 const Salary = require("../models/Salary");
 const Parent = require("../models/Parent");
-const Admission = require("../models/AdmissionSchema");
-const LateFee = require("../models/LateFeeSchema");
+const LateFee = require("../models/LateFees");
 const Admission = require("../models/Admission");
 const ClassFee = require("../models/ClassFee");
 const Bank = require("../models/Bank");
@@ -37,15 +36,15 @@ exports.login = async (req, res) => {
 
 exports.addStudent = async (req, res) => {
   try {
-    const student = new Student(req.body);
+    const student = new Student(req.body.formData);
     const savedStudent = await student.save();
-    res.status(201).json(savedStudent);
+    res.status(201).json({"Message":`The student has been created`});
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-};
+}
 
-exports.getSalaryDetails = async (req, res) => {
+exports.getAllStudent = async (req, res) => {
   try {
     const students = await Student.find();
     res.status(200).json(students);
