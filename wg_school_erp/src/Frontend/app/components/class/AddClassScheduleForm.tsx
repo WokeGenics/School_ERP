@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 
-export default function AddClassScheduleForm() {
+export default function AddClassScheduleForm({ onFormSubmit }) {
   const [formData, setFormData] = useState({
     teacherName: '',
     idNo: '',
@@ -22,9 +22,23 @@ export default function AddClassScheduleForm() {
 
   const handleSave = (e) => {
     e.preventDefault();
+
     console.log('Form submitted:', formData);
+    onFormSubmit(formData);
     alert('Class schedule added successfully!');
     // Optionally, send data to a backend server here
+    setFormData({
+      teacherName: '',
+      idNo: '',
+      gender: '',
+      subject: '',
+      section: '',
+      time: '',
+      phone: '',
+      email: '',
+      class: '',
+      date: '',
+    })
   };
 
   const handleReset = () => {
