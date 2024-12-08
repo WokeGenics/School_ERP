@@ -12,6 +12,7 @@ const transportRoutes = require('./routes/transportRoutes');
 const hostelRoomRoutes= require('./routes/hostelRoomRoutes');
 const noticeRoutes = require("./routes/noticeRoutes");
 const userMessageRoutes = require("./routes/userMessageRoutes");
+const classScheduleRoutes = require('./routes/classScheduleRoutes');
 // Load environment variables
 dotenv.config();
 
@@ -42,6 +43,7 @@ app.use('/api/transport', transportRoutes);
 app.use('/api/hostel-rooms', hostelRoomRoutes); 
 app.use('/api/notices', noticeRoutes);
 app.use('/api', userMessageRoutes);
+app.use('/api', classScheduleRoutes);
 // Serve login HTML page
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/views/login.html');
