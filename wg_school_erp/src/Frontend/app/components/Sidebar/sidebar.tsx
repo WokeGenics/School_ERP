@@ -1,235 +1,205 @@
-// app/components/Sidebar.tsx
 "use client";
-import { useState } from 'react';
-import Link from 'next/link';
-import { HomeIcon, UserIcon, CalendarIcon, DocumentReportIcon, CogIcon, ChevronDownIcon, ChevronUpIcon, CurrencyRupeeIcon,KeyIcon, ChevronRightIcon } from '@heroicons/react/outline';
+
+import { useState } from "react";
+import Link from "next/link";
+import {
+  HomeIcon,
+  UserGroupIcon,
+  BookOpenIcon,
+  DocumentTextIcon,
+  CogIcon,
+  ChevronRightIcon,
+  ChevronDownIcon,
+  CurrencyRupeeIcon,
+  ClipboardCheckIcon,
+  CalendarIcon,
+  BellIcon,
+  ChatIcon,
+  AcademicCapIcon,
+  TruckIcon,
+  OfficeBuildingIcon,
+  ClipboardListIcon,
+  AdjustmentsIcon,
+  MenuIcon,
+} from "@heroicons/react/outline";
+const menuItems = [
+  {
+    label: "Dashboard",
+    icon: <HomeIcon className="h-5 w-5" />,
+    key: "dashboard",
+    subItems: [
+      { label: "Admin", href: "/dashboard" },
+      { label: "Students", href: "/students-dashboard" },
+      { label: "Teachers", href: "/teachers-dashboard" },
+    ],
+  },
+  {
+    label: "Student",
+    icon: <AcademicCapIcon className="h-5 w-5" />,
+    key: "students",
+    subItems: [
+      { label: "Add Students", href: "/students/add-student" },
+      { label: "View Students", href: "/students/all-students" },
+      { label: "Student Details", href: "/students/student-detail" },
+      { label: "Students Promotion", href: "/students/promotion" },
+    ],
+  },
+  {
+    label: "Teachers",
+    icon: <UserGroupIcon className="h-5 w-5" />,
+    key: "teachers",
+    subItems: [
+      { label: "All Teachers", href: "/teachers/all-teachers" },
+      { label: "Add Teachers", href: "/teachers/add-teacher" },
+      { label: "Teachers Details", href: "/teachers/about-teacher" },
+      { label: "Payments", href: "/teachers/teachers-payment" },
+    ],
+  },
+  {
+    label: "Library",
+    icon: <BookOpenIcon className="h-5 w-5" />,
+    key: "library",
+    subItems: [
+      { label: "Add Books", href: "/library/add-book" },
+      { label: "All Books", href: "/library/all-books" },
+    ],
+  },
+  {
+    label: "Accounts",
+    icon: <CurrencyRupeeIcon className="h-5 w-5" />,
+    key: "accounts",
+    subItems: [
+      { label: "Add Expenses", href: "/accounts/add-expense" },
+      { label: "All Fee Collection", href: "/accounts/all-fee-details" },
+      { label: "Expenses", href: "/accounts/expenses" },
+    ],
+  },
+  {
+    label: "Class",
+    icon: <ClipboardCheckIcon className="h-5 w-5" />,
+    key: "class",
+    subItems: [
+      { label: "Add Class", href: "/class/add-new-class" },
+      { label: "All Class", href: "/class/all-class" },
+    ],
+  },
+  { label: "Class Routine", icon: <CalendarIcon className="h-5 w-5" />, href: "/class-routine" },
+  { label: "Attendance", icon: <ClipboardListIcon className="h-5 w-5" />, href: "/attendance" },
+  {
+    label: "Exam",
+    icon: <DocumentTextIcon className="h-5 w-5" />,
+    key: "exam",
+    subItems: [
+      { label: "Exam Schedule", href: "/exam/exam-schedule" },
+      { label: "Exam Grades", href: "/exam/exam-grades" },
+    ],
+  },
+  { label: "Transport", icon: <TruckIcon className="h-5 w-5" />, href: "/transport" },
+  { label: "Hostel", icon: <OfficeBuildingIcon className="h-5 w-5" />, href: "/hostel" },
+  { label: "Notice", icon: <BellIcon className="h-5 w-5" />, href: "/notice" },
+  { label: "Message", icon: <ChatIcon className="h-5 w-5" />, href: "/message" },
+  {
+    label: "Other Pages",
+    icon: <AdjustmentsIcon className="h-5 w-5" />,
+    key: "other_pages",
+    subItems: [
+      { label: "Login", href: "/login" },
+      { label: "Sign Up", href: "/signup" },
+      { label: "404", href: "/404" },
+      { label: "Blank Page", href: "/blank" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "FAQ", href: "/faq" },
+      { label: "Invoice", href: "/invoice" },
+    ],
+  },
+  {
+    label: "Reports",
+    icon: <DocumentTextIcon className="h-5 w-5" />,
+    key: "reports",
+    subItems: [
+      { label: "Medical Reports", href: "/reports/medical" },
+      { label: "Lab Results", href: "/reports/lab" },
+    ],
+  },
+  {
+    label: "Settings",
+    icon: <CogIcon className="h-5 w-5" />,
+    key: "settings",
+    subItems: [
+      { label: "Profile Settings", href: "/settings/profile" },
+      { label: "System Settings", href: "/settings/system" },
+    ],
+  },
+];
+
 
 const Sidebar = () => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const toggleDropdown = (menu: string) => {
-    setOpenMenu(openMenu === menu ? null : menu);
+    setOpenMenu((prev) => (prev === menu ? null : menu));
+    if (isCollapsed) {
+      setIsCollapsed(false); // Expand sidebar if collapsed
+    }
+  };
+
+  const toggleSidebar = () => {
+    setIsCollapsed((prev) => !prev);
   };
 
   return (
-    <div className="w-64 bg-transparent text-white pt-12 mt-0 ml-0 zee">
-     
-      <ul className='text-xl' >
-      <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-600 px-4 rounded" onClick={() => toggleDropdown('dashboard')}>
-            <div className="flex items-center">
-              <HomeIcon className="h-5 w-5 mr-2" /> Dashboard
+    <div className={`${isCollapsed ? "w-16" : "w-60"} bg-orange-500 text-white h-full transition-all duration-300`}>
+      {/* Toggle Button */}
+      <div className="flex justify-end p-5 ">
+        <button onClick={toggleSidebar} className="text-white">
+          <MenuIcon className="h-6 w-6" />
+        </button>
+      </div>
+      <ul className="text-base">
+        {menuItems.map((item) => (
+          <li key={item.label} className="relative group">
+            <div
+              className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-600 px-4 rounded"
+              onClick={() => item.subItems && toggleDropdown(item.key || "")}
+            >
+              <div className="flex items-center">
+                <Link href={item.href || "#"} className="flex items-center">
+                  {item.icon}
+                  {!isCollapsed && <span className="ml-2">{item.label}</span>}
+                </Link>
+              </div>
+              {item.subItems && !isCollapsed && (
+                <>
+                  {openMenu === item.key ? (
+                    <ChevronDownIcon className="h-5 w-5" />
+                  ) : (
+                    <ChevronRightIcon className="h-5 w-5" />
+                  )}
+                </>
+              )}
             </div>
-            {openMenu === 'dashboard' ? <ChevronDownIcon className="h-4 w-4 " /> : <ChevronRightIcon className="h-5 w-5" />}
-          </div>
-          {openMenu === 'dashboard' && (
-            <ul className="pl-6">
-              <li><Link href="/dashboard" className="block py-2 hover:bg-gray-700 rounded">Admin</Link></li>
-              <li><Link href="/students-dashboard" className="block py-2 hover:bg-gray-700 rounded">Students</Link></li>
-              <li><Link href="/teachers-dashboard" className="block py-2 hover:bg-gray-700 rounded">Teachers</Link></li>
-            
-            </ul>
-          )}
-        </li>
-
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('students')}>
-            <div className="flex items-center">
-              <UserIcon className="h-5 w-5 mr-2" /> Student
-            </div>
-            {openMenu === 'students' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
-          </div>
-          {openMenu === 'students' && (
-            <ul className="pl-6">
-              <li><Link href="/students/add-student" className="block py-2 hover:bg-gray-700 rounded">Add Students</Link></li>
-              <li><Link href="/students/all-students/" className="block py-2 hover:bg-gray-700 rounded">View Students</Link></li>
-              <li><Link href="/students/students-detail" className="block py-2 hover:bg-gray-700 rounded">Student Details</Link></li>
-              <li><Link href="/students/promotion" className="block py-2 hover:bg-gray-700 rounded">Students Promotion</Link></li>
-
-            </ul>
-          )}
-        </li>
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('teachers')}>
-            <div className="flex items-center">
-              <UserIcon className="h-5 w-5 mr-2" /> Teachers
-            </div>
-            {openMenu === 'teachers' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
-          </div>
-          {openMenu === 'teachers' && (
-            <ul className="pl-6">
-              <li><Link href="/teachers/all-teachers" className="block py-2 hover:bg-gray-700 rounded">All Teachers</Link></li>
-              <li><Link href="/teachers/add-teacher" className="block py-2 hover:bg-gray-700 rounded">Add Teachers</Link></li>
-              <li><Link href="/teachers/about-teacher" className="block py-2 hover:bg-gray-700 rounded">Teachers Details </Link></li>
-              <li><Link href="/teachers/teachers-payment" className="block py-2 hover:bg-gray-700 rounded">Payments</Link></li>
-
-            </ul>
-          )}
-        </li>
-
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('library')}>
-            <div className="flex items-center">
-              <CalendarIcon className="h-5 w-5 mr-2" /> Library
-            </div>
-            {openMenu === 'library' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
-          </div>
-          {openMenu === 'library' && (
-            <ul className="pl-6">
-              <li><Link href="/library/add-book" className="block py-2 hover:bg-gray-700 rounded">Add Books</Link></li>
-              <li><Link href="/library/all-books" className="block py-2 hover:bg-gray-700 rounded">All Books</Link></li>
-          
-            </ul>
-          )}
-        </li>
-
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('accounts')}>
-            <div className="flex items-center">
-              <CurrencyRupeeIcon className="h-5 w-5 mr-2" /> Accounts
-            </div>
-            {openMenu === 'accounts' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
-          </div>
-          {openMenu === 'accounts' && (
-            <ul className="pl-6">
-              <li><Link href="/accounts/add-expense" className="block py-2 hover:bg-gray-700 rounded">Add Expenses</Link></li>
-              <li><Link href="/accounts/all-fee-details" className="block py-2 hover:bg-gray-700 rounded">All Fee Collection</Link></li>
-              <li><Link href="/accounts/expenses" className="block py-2 hover:bg-gray-700 rounded">Expenses</Link></li>
-
-            </ul>
-          )}
-        </li>
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('class')}>
-            <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /> Class
-            </div>
-            {openMenu === 'class' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
-          </div>
-          {openMenu === 'class' && (
-            <ul className="pl-6">
-              <li><Link href="/class/add-new-class" className="block py-2 hover:bg-gray-700 rounded">Add Class </Link></li>
-              <li><Link href="/class/all-class" className="block py-2 hover:bg-gray-700 rounded">All Class</Link></li>
-            
-
-            </ul>
-          )}
-        </li>
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
-            <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /> <Link href="/class-routine" className="block py-2 hover:bg-gray-700 rounded">Class Routine</Link>
-            </div>
-            </div>
-       
-        </li>
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
-            <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /><Link href="/attendence" className="block py-2 hover:bg-gray-700 rounded">Attendence</Link> 
-            </div>
-            </div>
-       
-        </li>
-
-
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('exam')}>
-            <div className="flex items-center">
-              <CurrencyRupeeIcon className="h-5 w-5 mr-2" /> Exam
-            </div>
-            {openMenu === 'exam' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
-          </div>
-          {openMenu === 'exam' && (
-            <ul className="pl-6">
-              <li><a href="/exam/exam-schedule" className="block py-2 hover:bg-gray-700 rounded">Exam Schedule</a></li>
-              <li><a href="/exam/exam-grades" className="block py-2 hover:bg-gray-700 rounded">Exam Grades</a></li>
-           
-
-            </ul>
-          )}
-        </li>
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
-            <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /><Link href="/transport" className="block py-2 hover:bg-gray-700 rounded">Transport</Link> 
-            </div>
-            </div>
-       
-        </li>         <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
-            <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /><Link href="/hostel" className="block py-2 hover:bg-gray-700 rounded">Hostel</Link> 
-            </div>
-            </div>
-       
-        </li>
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
-            <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /><Link href="/notice" className="block py-2 hover:bg-gray-700 rounded">Notice</Link> 
-            </div>
-            </div>
-       
-        </li>
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded">
-            <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" /><Link href="/message" className="block py-2 hover:bg-gray-700 rounded">Message</Link> 
-            </div>
-            </div>
-       
-        </li>
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('other_pages')}>
-            <div className="flex items-center">
-              <KeyIcon className="h-5 w-5 mr-2" />Other Pages
-            </div>
-            {openMenu === 'other_pages' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
-          </div>
-          {openMenu === 'other_pages' && (
-            <ul className="pl-6">
-              <li><a href="/login/" className="block py-2 hover:bg-gray-700 rounded">Login</a></li>
-              <li><a href="/signup/" className="block py-2 hover:bg-gray-700 rounded">Sign Up</a></li>
-              <li><a href="#" className="block py-2 hover:bg-gray-700 rounded">404</a></li>
-              <li><a href="#" className="block py-2 hover:bg-gray-700 rounded">Blank Page</a></li>
-              <li><a href="#" className="block py-2 hover:bg-gray-700 rounded">Pricing</a></li>
-              <li><a href="#" className="block py-2 hover:bg-gray-700 rounded">FAQ</a></li>
-              <li><a href="#" className="block py-2 hover:bg-gray-700 rounded">Invoice</a></li>
-
-            </ul>
-          )}
-        </li>
-
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('reports')}>
-            <div className="flex items-center">
-              <DocumentReportIcon className="h-5 w-5 mr-2" /> Reports
-            </div>
-            {openMenu === 'reports' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
-          </div>
-          {openMenu === 'reports' && (
-            <ul className="pl-6">
-              <li><a href="#" className="block py-2 hover:bg-gray-700 rounded">Medical Reports</a></li>
-              <li><a href="#" className="block py-2 hover:bg-gray-700 rounded">Lab Results</a></li>
-            </ul>
-          )}
-        </li>
-
-        <li>
-          <div className="flex justify-between items-center cursor-pointer py-2 hover:bg-gray-700 px-4 rounded" onClick={() => toggleDropdown('settings')}>
-            <div className="flex items-center">
-              <CogIcon className="h-5 w-5 mr-2" /> Settings
-            </div>
-            {openMenu === 'settings' ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronRightIcon className="h-5 w-5" />}
-          </div>
-          {openMenu === 'settings' && (
-            <ul className="pl-6">
-              <li><a href="#" className="block py-2 hover:bg-gray-700 rounded">Profile Settings</a></li>
-              <li><a href="#" className="block py-2 hover:bg-gray-700 rounded">System Settings</a></li>
-            </ul>
-          )}
-        </li>
+            {isCollapsed && (
+              <div className="absolute left-full top-2 bg-gray-700 text-white text-sm rounded shadow-md px-2 py-1 opacity-0 group-hover:opacity-100">
+                {item.label}
+              </div>
+            )}
+            {item.subItems && openMenu === item.key && !isCollapsed && (
+              <ul className="pl-8">
+                {item.subItems.map((subItem) => (
+                  <li key={subItem.label}>
+                    <Link
+                      href={subItem.href}
+                      className="block py-2 hover:bg-gray-700 rounded"
+                    >
+                      {subItem.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
       </ul>
     </div>
   );

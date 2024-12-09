@@ -43,7 +43,7 @@ export default function FeesCollectionTable() {
   const paginatedFees = feesData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
-    <div className="bg-white shadow-md p-6 rounded-lg overflow-x-auto">
+    <div className="bg-white shadow-md p-6 rounded-lg overflow-x-scroll">
       <h2 className="text-lg font-bold mb-4">All Fees Collection</h2>
       <div className="flex space-x-4 mb-4">
         <input

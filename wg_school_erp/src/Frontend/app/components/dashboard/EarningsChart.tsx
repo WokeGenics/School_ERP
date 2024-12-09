@@ -11,15 +11,15 @@ export default function EarningsChart() {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     datasets: [
       {
-        label: 'Total Collection',
+        label: 'Total Earning',
         data: [75000, 82000, 92000, 88000, 100000, 110000, 120000],
         backgroundColor: 'rgba(54, 162, 235, 0.5)',
         borderColor: 'rgba(54, 162, 235, 1)',
         fill: true,
       },
       {
-        label: 'Fees Collection',
-        data: [15000, 20000, 22000, 19000, 25000, 27000, 30000],
+        label: 'Total Due',
+        data: [105000, 100000, 32000, 19000, 25000, 27000, 10000],
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         borderColor: 'rgba(255, 99, 132, 1)',
         fill: true,

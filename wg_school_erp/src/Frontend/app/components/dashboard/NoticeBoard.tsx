@@ -1,23 +1,24 @@
 'use client';
 
+import React, { useState, useEffect } from "react";
+import NoticeList from "../notice/NoticeList";
 export default function NoticeBoard() {
-    const notices = [
-      { date: '10 June 2019', message: 'Great School managing exam text of the printing.' },
-      { date: '12 June 2019', message: 'Great School managing printing.' },
-      { date: '15 June 2019', message: 'Great School managing menseson.' },
-    ];
-  
+  const [notices, setNotices] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    // Fetch notices from backend whenever the search query changes
+    const fetchNotices = async () => {
+      const response = await fetch(`http://localhost:5000/api/notices?searchQuery=${searchQuery}`);
+      const data = await response.json();
+      setNotices(data);
+    };
+
+    fetchNotices();
+  }, [searchQuery]);
     return (
       <div className="bg-white shadow-md p-4 rounded-md">
-        <h3 className="text-gray-600 text-lg font-semibold mb-4">Notice Board</h3>
-        <ul>
-          {notices.map((notice, index) => (
-            <li key={index} className="mb-2">
-              <p className="text-sm text-gray-500">{notice.date}</p>
-              <p  className="text-sm text-red-300">{notice.message}</p>
-            </li>
-          ))}
-        </ul>
+      <NoticeList  notices={notices} searchQuery={searchQuery} />
       </div>
     );
   }

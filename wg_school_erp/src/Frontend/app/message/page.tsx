@@ -134,7 +134,7 @@ const MessagingPage = () => {
   };
 
   return (
-    <div className="p-4 bg-gray-100 min-h-screen text-black">
+    <div className="p-4 bg-gray-100 min-h-screen text-black ">
       <div className="bg-white shadow-md rounded-lg p-6">
         <h1 className="text-xl font-semibold mb-4">Messaging System</h1>
 

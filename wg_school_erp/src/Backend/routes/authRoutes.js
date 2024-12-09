@@ -4,7 +4,7 @@ const router = express.Router();
 
 // get request
 router.get('/get-AllAdmission', getAllAdmission)
-router.get("/get-AllStudent", getAllStudent);
+
 router.get("/getAllTeacher", getAllTeacher);
 router.get("/detail-salary", getSalaryDetails);
 router.get("/getAllParent", getAllParent);

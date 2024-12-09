@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import AttendanceForm from '../components/attendence/AttendanceForm';
-import AttendanceTable from '../components/attendence/AttendanceTable';
+import AttendanceForm from '../components/attendance/AttendanceForm';
+import AttendanceTable from '../components/attendance/AttendanceTable';
 
 export default function AttendancePage() {
    const BaseUrl = "http://localhost:5000"
