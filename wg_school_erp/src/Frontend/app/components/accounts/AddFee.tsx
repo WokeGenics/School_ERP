@@ -6,7 +6,7 @@ export default function AddExpenseForm() {
   const [formData, setFormData] = useState({
     name: '',
     idNo: '',
-    expenseType: '',
+    due: '',
     amount: '',
     phone: '',
     email: '',
@@ -22,7 +22,7 @@ export default function AddExpenseForm() {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/expenses", {
+      const response = await fetch("http://localhost:5000/api/fee", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,11 +36,11 @@ export default function AddExpenseForm() {
 
       const data = await response.json();
       console.log(data);
-      alert("Expense added successfully!");
+      alert("Fee added successfully!");
       handleReset();
     } catch (error) {
-      console.error("Error saving expense:", error);
-      alert("Failed to save expense!");
+      console.error("Error saving fees:", error);
+      alert("Failed to save fees!");
     }
   };
 
@@ -48,8 +48,8 @@ export default function AddExpenseForm() {
     setFormData({
       name: '',
       idNo: '',
-      expenseType: '',
       amount: '',
+      due:'',
       phone: '',
       email: '',
       status: '',
@@ -58,7 +58,7 @@ export default function AddExpenseForm() {
   };
   return (
     <div className="bg-white shadow-md p-6 rounded-lg max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Add New Expense</h2>
+      <h2 className="text-2xl font-bold mb-4">Add New Fees</h2>
       <form onSubmit={handleSave} className="grid grid-cols-2 gap-4">
         
         {/* Name */}
@@ -89,28 +89,24 @@ export default function AddExpenseForm() {
 
         {/* Expense Type */}
         <div>
-          <label className="block font-semibold mb-1">Expense Type *</label>
-          <select
-            name="expenseType"
-            value={formData.expenseType}
-            onChange={handleChange}
-            className="border p-2 rounded-md w-full"
-            required
-          >
-            <option value="">Please Select</option>
-            <option value="Salary">Salary</option>
-            <option value="Transport">Transport</option>
-            <option value="Utilities">Utilities</option>
-          </select>
-        </div>
-
-        {/* Amount */}
-        <div>
           <label className="block font-semibold mb-1">Amount *</label>
           <input
             type="number"
             name="amount"
             value={formData.amount}
+            onChange={handleChange}
+            className="border p-2 rounded-md w-full"
+            required
+          />
+        </div>
+
+        {/* Amount */}
+        <div>
+          <label className="block font-semibold mb-1">Due *</label>
+          <input
+            type="number"
+            name="due"
+            value={formData.due}
             onChange={handleChange}
             className="border p-2 rounded-md w-full"
             required
@@ -153,6 +149,7 @@ export default function AddExpenseForm() {
             <option value="">Please Select</option>
             <option value="Paid">Paid</option>
             <option value="Due">Due</option>
+            <option value="Partial">Partial</option>
           </select>
         </div>
 

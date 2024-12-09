@@ -1,35 +1,44 @@
 "use client";
-import React, { useState } from 'react';
-import Pagination from './Pagination';
 
-const sampleExpenses = Array(30).fill().map((_, index) => ({
-  id: `#00${index + 1}`,
-  name: index % 2 === 0 ? 'Mark Willy' : 'Jessieal',
-  expenseType: index % 3 === 0 ? 'Salary' : index % 3 === 1 ? 'Transport' : 'Utilities',
-  amount: `$${(Math.random() * 5000 + 1000).toFixed(2)}`,
-  status: index % 2 === 0 ? 'Paid' : 'Due',
-  phone: '+123 9988558',
-  email: 'kazifahim93@gmail.com',
-  date: '02/02/2019',
-}));
+import React, { useEffect, useState } from "react";
+import Pagination from "./Pagination";
 
 export default function ExpensesTable() {
-  const [expensesData, setExpensesData] = useState(sampleExpenses);
-  const [searchId, setSearchId] = useState('');
-  const [searchName, setSearchName] = useState('');
-  const [searchPhone, setSearchPhone] = useState('');
+  const [allExpenses, setAllExpenses] = useState([]); // Holds the full dataset
+  const [expensesData, setExpensesData] = useState([]); // Holds the currently displayed data
+  const [searchId, setSearchId] = useState("");
+  const [searchName, setSearchName] = useState("");
+  const [searchPhone, setSearchPhone] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  // Fetch expenses from the backend
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/expenses");
+        if (!response.ok) throw new Error("Failed to fetch expenses");
+        const data = await response.json();
+        setAllExpenses(data);
+        setExpensesData(data);
+      } catch (error) {
+        console.error("Error fetching expenses:", error);
+        alert("Failed to load expenses!");
+      }
+    };
+
+    fetchExpenses();
+  }, []);
+
   const handleSearch = () => {
-    const filteredExpenses = sampleExpenses.filter(
+    const filteredExpenses = allExpenses.filter(
       (expense) =>
-        expense.id.toLowerCase().includes(searchId.toLowerCase()) &&
+        expense.idNo.toLowerCase().includes(searchId.toLowerCase()) &&
         expense.name.toLowerCase().includes(searchName.toLowerCase()) &&
         expense.phone.toLowerCase().includes(searchPhone.toLowerCase())
     );
     setExpensesData(filteredExpenses);
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset to the first page after filtering
   };
 
   const handlePageChange = (page) => {
@@ -89,14 +98,14 @@ export default function ExpensesTable() {
           {paginatedExpenses.map((expense) => (
             <tr key={expense.id} className="border-b">
               <td className="p-3"><input type="checkbox" /></td>
-              <td className="p-3">{expense.id}</td>
+              <td className="p-3">{expense.idNo}</td>
               <td className="p-3">{expense.name}</td>
               <td className="p-3">{expense.expenseType}</td>
               <td className="p-3">{expense.amount}</td>
               <td className="p-3">
                 <span
                   className={`px-3 py-1 rounded-full text-white ${
-                    expense.status === 'Paid' ? 'bg-green-500' : 'bg-red-500'
+                    expense.status === "Paid" ? "bg-green-500" : "bg-red-500"
                   }`}
                 >
                   {expense.status}

@@ -69,6 +69,7 @@ const menuItems = [
     icon: <CurrencyRupeeIcon className="h-5 w-5" />,
     key: "accounts",
     subItems: [
+      { label: "Add Fees", href: "/accounts/add-fee" },
       { label: "Add Expenses", href: "/accounts/add-expense" },
       { label: "All Fee Collection", href: "/accounts/all-fee-details" },
       { label: "Expenses", href: "/accounts/expenses" },
