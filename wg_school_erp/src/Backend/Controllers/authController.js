@@ -171,7 +171,7 @@ exports.Bank = async (req, res) => {
   }
 };
 
-exports.Bank = async (req, res) => {
+exports.getBank = async (req, res) => {
   try {
     const bank = await Bank.find();
     res.status(200).json(bank);

@@ -10,18 +10,36 @@ export default function AddBookForm() {
     publishedYear: '',
     creatingDate: '',
   });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Book added successfully!');
-    // Optionally, send data to a backend server here
+    try {
+      const response = await fetch("http://localhost:5000/api/books",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save expense");
+      }
+
+      const data = await response.json();
+      console.log(formData);
+      alert("Book added successfully!");
+      handleReset();
+    } catch (error) {
+      console.error("Error saving Book:", error);
+      alert("Failed to save Book!");
+    }
   };
+
 
   const handleReset = () => {
     setFormData({
@@ -34,11 +52,12 @@ export default function AddBookForm() {
     });
   };
 
+ 
+  
   return (
     <div className="bg-white shadow-md p-6 rounded-lg max-w-lg mx-auto">
       <h2 className="text-2xl font-bold mb-4">Add New Book</h2>
       <form onSubmit={handleSave} className="grid gap-4">
-        
         {/* Book Name */}
         <div>
           <label className="block font-semibold mb-1">Book Name *</label>
