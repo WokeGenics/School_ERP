@@ -1,48 +1,32 @@
-// models/Admission.js
+// models/Teacher.js
 const mongoose = require('mongoose');
 
-const TeacherSchema = new mongoose.Schema({
-    FirstName:{
+const teacherSchema = new mongoose.Schema({
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  gender: { type: String, required: true },
+  dob: { type: Date, required: true },
+  idNo: { type: String },
+  bloodGroup: { type: String, required: true },
+  religion: { type: String, required: true },
+  email: { type: String },
+  class: { type: String, required: true },
+  section: { type: String, required: true },
+  address: { type: String },
+  phone: { type: String },
+  bio: { type: String },
+  images:[{
+    public_id:{
         type:String,
-        required:true
+        required:true,
+        
     },
-    LastName:{
+     url:{
         type:String,
-        required:true
-    },
-    Gender:{
-        type:String,
-        required:true
-    },
-    DateOfBirth:{
-        type:Date,
-        required:true
-    },
-    IdNo:{
-        type:String,
-        required:true
-    },
-    Email:{
-        type:String,
-        required:true
-    },
-    Religion:{
-        type:String,
-        required:true
-    },
-    Address:{
-        type:String,
-        required:true
-    },
-    phoneNumber:{
-        type:String,
-        required:true
-    },
-    ShortBio:{
-        type:String,
-        required:true
+        required:true,
+        
     }
+}],
+}, { timestamps: true });
 
-});
-
-module.exports = mongoose.model('Teacher', TeacherSchema);
+module.exports = mongoose.model('Teacher', teacherSchema);

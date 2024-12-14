@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from 'react';
 
-export default function AddTeacherForm() {
+import React, { useState } from "react";
+
+export default function AddExpenseForm() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -15,9 +16,10 @@ export default function AddTeacherForm() {
     section: '',
     address: '',
     phone: '',
-    bio: '',
-    photo: null,
+    bio:  '',
+    image: null, 
   });
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,42 +28,65 @@ export default function AddTeacherForm() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setFormData((prevData) => ({ ...prevData, photo: file }));
+    setFormData((prevData) => ({ ...prevData, image: file }));
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Teacher data saved successfully!');
-    // Optionally, send data to a backend server here
+
+    const formDataObj = new FormData();
+    Object.keys(formData).forEach((key) => {
+      if (key === "image" && formData.image) {
+        formDataObj.append(key, formData.image); // Append file
+      } else {
+        formDataObj.append(key, formData[key]); // Append other fields
+      }
+    });
+
+    try {
+      const response = await fetch("http://localhost:5000/api/teachers", {
+        method: "POST",
+        body: formDataObj,
+      });
+
+      if (!response.ok) throw new Error("Failed to save teacher data");
+      const data = await response.json();
+      alert("Teacher data saved successfully!");
+      console.log("Response:", data);
+    } catch (error) {
+      console.error("Error saving teacher:", error);
+      alert("Failed to save teacher data");
+    }
   };
+
+  
 
   const handleReset = () => {
     setFormData({
-      firstName: '',
-      lastName: '',
-      gender: '',
-      dob: '',
-      idNo: '',
-      bloodGroup: '',
-      religion: '',
-      email: '',
-      class: '',
-      section: '',
-      address: '',
-      phone: '',
-      bio: '',
-      photo: null,
+    firstName: '',
+    lastName: '',
+    gender: '',
+    dob: '',
+    idNo: '',
+    bloodGroup: '',
+    religion: '',
+    email: '',
+    class: '',
+    section: '',
+    address: '',
+    phone: '',
+    bio:  '',
+    image: '', 
     });
   };
-
   return (
-    <div className="bg-white shadow-md p-6 rounded-lg text-black">
-      <h2 className="text-2xl font-bold mb-4">Add New Teacher</h2>
+    <div className="bg-white shadow-md p-6 rounded-lg max-w-4xl mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Add New Expense</h2>
       <form onSubmit={handleSave} className="grid grid-cols-2 gap-4">
-        {/* First Name */}
+        
+        {/* Name */}
         <div>
-          <label className="block font-semibold mb-1">First Name *</label>
+          <label className="block font-semibold mb-1">Last Name *</label>
           <input
             type="text"
             name="firstName"
@@ -72,9 +97,9 @@ export default function AddTeacherForm() {
           />
         </div>
 
-        {/* Last Name */}
+        {/* ID No */}
         <div>
-          <label className="block font-semibold mb-1">Last Name *</label>
+          <label className="block font-semibold mb-1">Last Name</label>
           <input
             type="text"
             name="lastName"
@@ -85,9 +110,9 @@ export default function AddTeacherForm() {
           />
         </div>
 
-        {/* Gender */}
+        {/* Expense Type */}
         <div>
-          <label className="block font-semibold mb-1">Gender *</label>
+          <label className="block font-semibold mb-1">Gender</label>
           <select
             name="gender"
             value={formData.gender}
@@ -95,15 +120,16 @@ export default function AddTeacherForm() {
             className="border p-2 rounded-md w-full"
             required
           >
-            <option value="">Please Select Gender *</option>
+            <option value="">Please Select</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
+            <option value="Others">Others</option>
           </select>
         </div>
 
-        {/* Date of Birth */}
+        {/* Amount */}
         <div>
-          <label className="block font-semibold mb-1">Date Of Birth *</label>
+          <label className="block font-semibold mb-1">DOB </label>
           <input
             type="date"
             name="dob"
@@ -113,10 +139,8 @@ export default function AddTeacherForm() {
             required
           />
         </div>
-
-        {/* ID No */}
         <div>
-          <label className="block font-semibold mb-1">ID No</label>
+          <label className="block font-semibold mb-1">Id No.</label>
           <input
             type="text"
             name="idNo"
@@ -125,15 +149,15 @@ export default function AddTeacherForm() {
             className="border p-2 rounded-md w-full"
           />
         </div>
-
-        {/* Blood Group */}
         <div>
-          <label className="block font-semibold mb-1">Blood Group *</label>
-          <select
-            name="bloodGroup"
-            value={formData.bloodGroup}
-            onChange={handleChange}
-            className="border p-2 rounded-md w-full"
+          <label className="block font-semibold mb-1">Blood Group</label>
+        
+           <select
+    
+          name="bloodGroup"
+          value={formData.bloodGroup}
+          onChange={handleChange}
+          className="border p-2 rounded-md w-full"
             required
           >
             <option value="">Please Select Group *</option>
@@ -147,9 +171,8 @@ export default function AddTeacherForm() {
             <option value="AB-">AB-</option>
           </select>
         </div>
-
-        {/* Religion */}
-        <div>
+              {/* Religion */}
+              <div>
           <label className="block font-semibold mb-1">Religion *</label>
           <select
             name="religion"
@@ -165,8 +188,6 @@ export default function AddTeacherForm() {
             <option value="Buddhism">Buddhism</option>
           </select>
         </div>
-
-        {/* E-mail */}
         <div>
           <label className="block font-semibold mb-1">E-mail</label>
           <input
@@ -177,8 +198,6 @@ export default function AddTeacherForm() {
             className="border p-2 rounded-md w-full"
           />
         </div>
-
-        {/* Class */}
         <div>
           <label className="block font-semibold mb-1">Class *</label>
           <select
@@ -197,7 +216,6 @@ export default function AddTeacherForm() {
           </select>
         </div>
 
-        {/* Section */}
         <div>
           <label className="block font-semibold mb-1">Section *</label>
           <select
@@ -214,8 +232,6 @@ export default function AddTeacherForm() {
             <option value="D">D</option>
           </select>
         </div>
-
-        {/* Address */}
         <div>
           <label className="block font-semibold mb-1">Address</label>
           <input
@@ -238,9 +254,8 @@ export default function AddTeacherForm() {
             className="border p-2 rounded-md w-full"
           />
         </div>
-
-        {/* Short BIO */}
-        <div className="col-span-2">
+                {/* Short BIO */}
+                <div className="col-span-2">
           <label className="block font-semibold mb-1">Short BIO</label>
           <textarea
             name="bio"
@@ -259,9 +274,8 @@ export default function AddTeacherForm() {
             onChange={handleFileChange}
             accept="image/*"
             className="border p-2 rounded-md w-full"
-          />
+           />
         </div>
-
         {/* Save and Reset Buttons */}
         <div className="col-span-2 flex space-x-4 mt-4">
           <button
