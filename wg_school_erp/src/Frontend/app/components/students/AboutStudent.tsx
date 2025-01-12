@@ -36,7 +36,7 @@ export default function AboutStudent() {
   };
 
   useEffect(()=>{
-    const response = fetch('http://localhost:5000/auth/get-AllStudent')
+    const response = fetch('http://localhost:5000/api/get-AllStudent')
     .then(response => response.json())
     .then(data => setProfileData(data))
   })

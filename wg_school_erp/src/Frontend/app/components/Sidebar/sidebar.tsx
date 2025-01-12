@@ -23,6 +23,10 @@ import {
   MenuIcon,
 } from "@heroicons/react/outline";
 const menuItems = [
+  {  label: "Admission",
+    icon: <AcademicCapIcon className="h-5 w-5" />,
+    href:"/admission",
+    key: "admission",},
   {
     label: "Dashboard",
     icon: <HomeIcon className="h-5 w-5" />,

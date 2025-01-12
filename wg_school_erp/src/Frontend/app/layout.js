@@ -1,10 +1,14 @@
 // app/layout.js
 "use client";
 import './globals.css';
+import '@fullcalendar/daygrid'
+import '@fullcalendar/timegrid'
+import '@fullcalendar/core'
 import LoginPage from "../app/login/page";
 import Header from './Header/header';
 import Sidebar from './components/Sidebar/sidebar';
 import { useEffect, useState } from 'react';
+
 
 export default function RootLayout({ children }) {
   const [isLoading, setIsLoading] = useState(true);

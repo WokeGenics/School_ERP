@@ -1,37 +1,116 @@
-// models/Admission.js
 const mongoose = require('mongoose');
 
-const AdmissionSchema = new mongoose.Schema({
-    student_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Student',
-        required: true
-    },
-    admission_class: {
-        type: String,
-        required: true
-    },
-    promoted_class: {
-        type: String,
-        require: true
-    },
-    admission_date: {
-        type: Date,
-        required: true
-    },
-    form_id: {
-        type: mongoose.Schema.Types.ObjectId
-    },
-    form_buyer_name: {
-        type: String
-    },
-    form_selling_count: {
-        type: Number
-    },
-    entrance_exam_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'EntranceExam'
-    }
+const admissionSchema = new mongoose.Schema({
+  admissionNumber: {
+    type: String,
+    required: [true, 'Admission Number is required'],
+    unique: true,
+    trim: true,
+  },
+  admissionDate: {
+    type: Date,
+    required: [true, 'Admission Date is required'],
+  },
+  firstName: {
+    type: String,
+    required: [true, 'First Name is required'],
+    trim: true,
+  },
+  middleName: {
+    type: String,
+    trim: true,
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Last Name is required'],
+    trim: true,
+  },
+  admissionClass:{
+    type: String,
+    required: [true, 'class is required'],
+    trim: true,
+  },
+
+  dateOfBirth: {
+    type: Date,
+    required: [true, 'Date of Birth is required'],
+  },
+  gender: {
+    type: String,
+    enum: ['Male', 'Female', 'Other'],
+    required: [true, 'Gender is required'],
+  },
+  address: {
+    type: String,
+    required: [true, 'Address is required'],
+  },
+  city: {
+    type: String,
+    required: [true, 'City is required'],
+  },
+  state: {
+    type: String,
+    required: [true, 'State is required'],
+  },
+  zipCode: {
+    type: String,
+    required: [true, 'ZIP Code is required'],
+  },
+  countryCode: {
+    type: String,
+    required: [true, 'Country Code is required'],
+  },
+  mobileNumber: {
+    type: String,
+    required: [true, 'Mobile Number is required'],
+    match: [/^\d{10,15}$/, 'Please enter a valid Mobile Number'],
+  },
+  alternateMobileNumber: {
+    type: String,
+    match: [/^\d{10,15}$/, 'Please enter a valid Alternate Mobile Number'],
+  },
+  email: {
+    type: String,
+    match: [/.+@.+\..+/, 'Please enter a valid Email Address'],
+  },
+  previousSchool: {
+    type: String,
+    trim: true,
+  },
+  siblings: {
+    type: Boolean,
+    // Optional: Can store sibling details as a JSON string or text
+  },
+  parentalStatus: { // New Field
+    type: String,
+    trim: true,
+  },
+  fatherName: {
+    type: String,
+    required: [true, 'Father\'s Name is required'],
+    trim: true,
+  },
+  fatherDOB: {
+    type: Date,
+  },
+  fatherOccupation: {
+    type: String,
+    trim: true,
+  },
+  motherName: {
+    type: String,
+    required: [true, 'Mother\'s Name is required'],
+    trim: true,
+  },
+  motherDOB: {
+    type: Date,
+  },
+  motherOccupation: {
+    type: String,
+    trim: true,
+  },
+}, {
+  timestamps: true, // Adds createdAt and updatedAt fields automatically
 });
 
-module.exports = mongoose.model('Admission', AdmissionSchema);
+module.exports = mongoose.model('Admission', admissionSchema);

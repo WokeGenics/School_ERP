@@ -4,6 +4,7 @@ import StudentsPieChart from '../components/dashboard/StudentsPieChart';
 import EventCalendar from '../components/dashboard/EventCalendar';
 import NoticeBoard from '../components/dashboard/NoticeBoard';
 import FooterStats from '../components/dashboard/FooterStats';
+import CalendarPage from '../components/calendar';
 
 
 export default function Dashboard() {
@@ -16,10 +17,14 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <EarningsChart />
         <StudentsPieChart />
-        <EventCalendar />
-        <NoticeBoard />
-      </div>
 
+       <NoticeBoard />
+       <CalendarPage />
+   
+  
+  
+      </div>
+ 
       {/* Footer */}
       <FooterStats />
     </div>

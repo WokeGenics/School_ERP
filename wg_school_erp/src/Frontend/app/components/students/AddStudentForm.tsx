@@ -1,87 +1,143 @@
 "use client";
-import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-
+interface FormDataType {
+  first_name: string;
+  last_name: string;
+  gender: string;
+  dob: string;
+  roll: string;
+  bloodGroup: string;
+  religion: string;
+  email: string;
+  studentClass: string;
+  section: string;
+  admissionId: string;
+  phone: string;
+  bio: string;
+}
 
 export default function AddStudentForm() {
-  const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    gender: '',
-    dob: '',
-    roll: '',
-    bloodGroup: '',
-    religion: '',
-    email: '',
-    class: '',
-    section: '',
-    admissionId: '',
-    phone: '',
-    bio: '',
-    photo: null,
+  const [formData, setFormData] = useState<FormDataType>({
+    first_name: "",
+    last_name: "",
+    gender: "",
+    dob: "",
+    roll: "",
+    bloodGroup: "",
+    religion: "",
+    email: "",
+    studentClass: "",
+    section: "",
+    admissionId: "",
+    phone: "",
+    bio: "",
   });
 
-  // const handalesubmit = (e)=>{
-  //   console.log(formData);
-  // } 
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e) => {
+  // Handle text/select changes
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData((prevData) => ({ ...prevData, photo: file }));
-  };
+  // Handle file input changes
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "photo") {
+      const file = e.target.files?.[0];
+      if (!file) return;
 
-  const handalesubmit = async(e) => {
-    e.preventDefault();
-    // Perform validation here if needed
-    console.log("hello")
-    const response = await fetch('http://localhost:5000/auth/addStudent', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        formData: formData,
-      })
-    })
+      // Convert file to DataURL for preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2 && typeof reader.result === "string") {
+          setPhotoPreview(reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
 
-    const data = await response.json();
-    if(data.Message == "The student has been created"){
-      toast("The student has been created")
+      // Store the raw file object
+      setPhoto(file);
     }
-    // Here, you could also send the data to a backend server
   };
 
+  // Submit form data as multipart/form-data
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const formDataToSend = new FormData();
+
+      // Append text fields
+      Object.keys(formData).forEach((key) => {
+        const value = formData[key as keyof FormDataType];
+        if (value) {
+          formDataToSend.append(key, value);
+        }
+      });
+
+      // Append file if available
+      if (photo) {
+        formDataToSend.append("photo", photo);
+      }
+
+      // Make the POST request
+      const response = await fetch("http://localhost:5000/api/students", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      const data = await response.json();
+      console.log(formData)
+      if (data.Message === "The student has been created") {
+        toast.success(data.Message);
+        handleReset();
+      } else {
+        toast.error(data.Message || "An error occurred");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("An error occurred while submitting the form");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Reset form
   const handleReset = () => {
     setFormData({
-      first_name: '',
-      last_name: '',
-      gender: '',
-      dob: '',
-      roll: '',
-      bloodGroup: '',
-      religion: '',
-      email: '',
-      class: '',
-      section: '',
-      admissionId: '',
-      phone: '',
-      bio: '',
-      photo: null,
+      first_name: "",
+      last_name: "",
+      gender: "",
+      dob: "",
+      roll: "",
+      bloodGroup: "",
+      religion: "",
+      email: "",
+      studentClass: "",
+      section: "",
+      admissionId: "",
+      phone: "",
+      bio: "",
     });
+    setPhoto(null);
+    setPhotoPreview(null);
   };
 
   return (
-    <div className="bg-white shadow-md p-6 rounded-lg">
-      <h2 className="text-2xl font-bold mb-4">Add New Students</h2>
-      <ToastContainer/>
-      <form onSubmit={handalesubmit} className="grid grid-cols-2 gap-4">
+    <div className="max-w-3xl mx-auto bg-white shadow-md p-6 rounded-lg">
+      <h2 className="text-2xl font-bold mb-4">Add New Student</h2>
+      <ToastContainer />
+
+      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4" encType="multipart/form-data">
         {/* First Name */}
         <div>
           <label className="block font-semibold mb-1">First Name *</label>
@@ -118,7 +174,7 @@ export default function AddStudentForm() {
             className="border p-2 rounded-md w-full"
             required
           >
-            <option value="">Please Select Gender *</option>
+            <option value="">Select Gender...</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
@@ -159,7 +215,7 @@ export default function AddStudentForm() {
             className="border p-2 rounded-md w-full"
             required
           >
-            <option value="">Please Select Group *</option>
+            <option value="">Select Blood Group...</option>
             <option value="A+">A+</option>
             <option value="A-">A-</option>
             <option value="B+">B+</option>
@@ -181,7 +237,7 @@ export default function AddStudentForm() {
             className="border p-2 rounded-md w-full"
             required
           >
-            <option value="">Please Select Religion *</option>
+            <option value="">Select Religion...</option>
             <option value="Islam">Islam</option>
             <option value="Christianity">Christianity</option>
             <option value="Hinduism">Hinduism</option>
@@ -205,13 +261,13 @@ export default function AddStudentForm() {
         <div>
           <label className="block font-semibold mb-1">Class *</label>
           <select
-            name="class"
-            value={formData.class}
+            name="studentClass"
+            value={formData.studentClass}
             onChange={handleChange}
             className="border p-2 rounded-md w-full"
             required
           >
-            <option value="">Please Select Class *</option>
+            <option value="">Select Class...</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -230,7 +286,7 @@ export default function AddStudentForm() {
             className="border p-2 rounded-md w-full"
             required
           >
-            <option value="">Please Select Section *</option>
+            <option value="">Select Section...</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
@@ -271,32 +327,42 @@ export default function AddStudentForm() {
             onChange={handleChange}
             className="border p-2 rounded-md w-full"
             rows={4}
-          ></textarea>
+          />
         </div>
 
         {/* Photo Upload */}
         <div className="col-span-2">
-          <label className="block font-semibold mb-1">Upload Student Photo (150px X 150px)</label>
+          <label className="block font-semibold mb-1">Upload Student Photo</label>
+          {photoPreview && (
+            <img
+              src={photoPreview}
+              alt="Photo Preview"
+              className="w-24 h-24 object-cover mb-2"
+            />
+          )}
           <input
             type="file"
-            onChange={handleFileChange}
+            name="photo"
             accept="image/*"
+            onChange={handleFileChange}
             className="border p-2 rounded-md w-full"
           />
         </div>
 
-        {/* Save and Reset Buttons */}
+        {/* Save/Reset Buttons */}
         <div className="col-span-2 flex space-x-4 mt-4">
           <button
             type="submit"
-            className="bg-yellow-500 text-white px-4 py-2 rounded-md font-semibold"
+            disabled={isSubmitting}
+            className={`px-4 py-2 rounded-md font-semibold text-white 
+              ${isSubmitting ? "bg-gray-500" : "bg-yellow-500 hover:bg-yellow-600"}`}
           >
-            Save
+            {isSubmitting ? "Saving..." : "Save"}
           </button>
           <button
             type="button"
             onClick={handleReset}
-            className="bg-blue-700 text-white px-4 py-2 rounded-md font-semibold"
+            className="bg-blue-700 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-800"
           >
             Reset
           </button>
